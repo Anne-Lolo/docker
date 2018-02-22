@@ -1,0 +1,36 @@
+docker
+
+installer docker et docker-compose
+
+en local:
+
+pull repo docker-compose Yuffie
+verifier l'état des containers en local : sudo docker ps -a
+=> une liste des containers qui sont crées s'affiche.
+Pour les containers qui sont utilisés pour yuffie, il faut les remove: sudo docker stop <ID containers>, puis sudo docker rm <ID container>
+se rendre dans le dossier docker-compose Yuffie et lancer le script de cette maniere la : sudo docker-compose build --no-cache
+option --no-cache pour obliger le script a clone le repo git.
+Suite au build, vérifier l'etat des containers : sudo docker ps -a
+Si aucuns des containers pour Yuffie est lancé, executer la commande suivante : sudo docker-compose up &
+le & pour lancer en background le lancement des containers.
+
+sur la vm:
+
+ssh azureworker@52.157.147.160 mdp HpcCloud2018
+sudoer mdp HpcCloud2018
+
+Une fois connecté sur la vm, executer la commande suivante pour vérifier l'état des containers : sudo docker ps -a
+Une liste de container s'affiche, un pour le site web et l'autre pour la base de données neo4j.
+Il est possible de vérifier leur était dans les détails qui sont donnés dans la liste. Il existe plusieurs states : Up, Stopped, Exit
+Pour livrer une nouvelle version du site, il faut suivre les étapes suivantes:
+- sudo docker stop <ID container>
+- sudo docker rm <ID container>
+- sudo docker-compose build --no-cache
+- sudo docker ps -a
+- sudo docker-compose up &
+
+Une fois la dernière commande lancée, il faut attendre que les deux environnements soient lancés complètement, cela peut prendre bien 5 minutes.
+
+Comme il est possible de le voir dans le script docker-compose, j'ai setter des ports bien spécifiques et il faut s'y tenir lors de l'accès aux sites (animeco et infterface web neo4j).
+
+ 

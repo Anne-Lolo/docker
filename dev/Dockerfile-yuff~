@@ -1,0 +1,13 @@
+FROM microsoft/dotnet:2.0-sdk
+
+RUN git clone https://02e126de00be5f54ff5ccb541b8fe1896534c494:x-oauth-basic@github.com/Innovassu/Yuffie.git /app
+
+WORKDIR /app/WebApp
+
+RUN export ASPNETCORE_ENVIRONMENT=Development
+
+RUN dotnet restore
+RUN dotnet publish -c Release -o out
+
+
+ENTRYPOINT ["dotnet", "run"]
